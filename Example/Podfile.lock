@@ -1,0 +1,16 @@
+PODS:
+  - ADExtensionKit (0.1.0)
+
+DEPENDENCIES:
+  - ADExtensionKit (from `../`)
+
+EXTERNAL SOURCES:
+  ADExtensionKit:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  ADExtensionKit: effb431d99390adc22892cc3b759853b2182e57a
+
+PODFILE CHECKSUM: 002e5f0bb147fde4a0cc779ab01ab442a031b60c
+
+COCOAPODS: 1.9.1

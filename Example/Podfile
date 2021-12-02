@@ -1,0 +1,13 @@
+use_frameworks!
+
+platform :ios, '9.0'
+
+target 'ADExtensionKit_Example' do
+  pod 'ADExtensionKit', :path => '../'
+
+  target 'ADExtensionKit_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
