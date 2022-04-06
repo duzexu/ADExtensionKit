@@ -18,19 +18,19 @@ public extension ExtensionWrapper where Base: UICollectionView {
     }
     
     func regisiterHeader(view: AnyClass) {
-        base.register(view, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: NSStringFromClass(view))
+        base.register(view, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: NSStringFromClass(view))
     }
     
     func regisiterFooter(view: AnyClass) {
-        base.register(view, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: NSStringFromClass(view))
+        base.register(view, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: NSStringFromClass(view))
     }
     
     func regisiterHeader(nib: AnyClass) {
-        base.register(UINib(nibName: NSStringFromClass(nib).components(separatedBy: ".").last!, bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: NSStringFromClass(nib))
+        base.register(UINib(nibName: NSStringFromClass(nib).components(separatedBy: ".").last!, bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: NSStringFromClass(nib))
     }
     
     func regisiterFooter(nib: AnyClass) {
-        base.register(UINib(nibName: NSStringFromClass(nib).components(separatedBy: ".").last!, bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: NSStringFromClass(nib))
+        base.register(UINib(nibName: NSStringFromClass(nib).components(separatedBy: ".").last!, bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: NSStringFromClass(nib))
     }
     
     func dequeueReusableCell<T: UICollectionViewCell>(type: T.Type, cellForRowAt indexPath: IndexPath) -> T {
@@ -38,11 +38,11 @@ public extension ExtensionWrapper where Base: UICollectionView {
     }
     
     func dequeueReusableHeaderView<T: UICollectionReusableView>(type: T.Type, viewForRowAt indexPath: IndexPath) -> T {
-        return base.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: NSStringFromClass(type), for: indexPath) as! T
+        return base.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: NSStringFromClass(type), for: indexPath) as! T
     }
     
     func dequeueReusableFooterView<T: UICollectionReusableView>(type: T.Type, viewForRowAt indexPath: IndexPath) -> T {
-        return base.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: NSStringFromClass(type), for: indexPath) as! T
+        return base.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: NSStringFromClass(type), for: indexPath) as! T
     }
     
 }

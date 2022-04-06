@@ -12,7 +12,7 @@ extension UIImage: ExtensionCompatible {}
 public extension ExtensionWrapper where Base: UIImage {
     
     func base64String() -> String? {
-        if let data = UIImagePNGRepresentation(base) {
+        if let data = base.pngData() {
             return data.base64EncodedString()
         }
         return nil
@@ -48,6 +48,21 @@ public extension ExtensionWrapper where Base: UIImage {
         return output ?? base
     }
     
+    func applyGaussianBlur(radius: CGFloat = 10) -> UIImage? {
+        let ciimage = CIImage(image: base)
+        let gaussianBlur = CIFilter(name:"CIGaussianBlur")
+        gaussianBlur?.setValue(ciimage, forKey: "inputImage")
+        gaussianBlur?.setValue(radius, forKey: "inputRadius")
+        
+        guard let filter = gaussianBlur else { return nil }
+        
+        let cgimage = UIImage.cicontext.createCGImage((filter.outputImage)!, from: CGRect(x: 0, y: 0, width: base.size.width, height: base.size.height))
+        
+        guard let cg = cgimage else { return nil }
+        
+        return UIImage(cgImage: cg)
+    }
+    
     func removeWhiteBg() -> UIImage? {
         let colorMasking: [CGFloat] = [222, 255, 222, 255, 222, 255]
         return transparentColor(colorMasking)
@@ -56,6 +71,20 @@ public extension ExtensionWrapper where Base: UIImage {
     func removeBlackBg() -> UIImage? {
         let colorMasking: [CGFloat] = [0, 32, 0, 32, 0, 32]
         return transparentColor(colorMasking)
+    }
+    
+    func safeJpegData(compressionQuality: CGFloat) -> Data {
+        func copy(image: UIImage) -> UIImage {
+            UIGraphicsBeginImageContext(image.size);
+            image.draw(at: .zero)
+            let result = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext();
+            return result!
+        }
+        if let data = base.jpegData(compressionQuality: compressionQuality) {
+            return data
+        }
+        return copy(image: base).jpegData(compressionQuality: compressionQuality)!
     }
     
     private func transparentColor(_ colorMask: [CGFloat]) -> UIImage {
@@ -411,4 +440,13 @@ public extension ExtensionWrapper where Base: UIImage {
         return animation
     }
     
+}
+
+extension UIImage {
+    static let cicontext: CIContext = {
+        if let device = MTLCreateSystemDefaultDevice() {
+            return CIContext(mtlDevice: device)
+        }
+        return CIContext()
+    }()
 }
